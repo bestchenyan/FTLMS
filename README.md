@@ -3,7 +3,6 @@
 * 采用`vue-cli` 构建初始项目目录
 * 使用`vue`、`vue-router`、`express`、`webpack`、`gulp`、`Element-ui`构建项目开发环境
 * 前端采用Vue、Element-ui搭建页面以及数据处理，后端采用express完成增删改查的restful API
-* 页面为电影列表页以及电影详情页
 
 > 目录及文件的改动，均含详细备注
 
@@ -21,8 +20,6 @@ npm install 安装依赖
 
 npm run dev 使用webpack开启前端资源的打包编译
 
-npm run data  从豆瓣获取几条源数据
-
 npm run server  启动服务端并开启浏览器
 
 ```
@@ -33,17 +30,5 @@ npm run server  启动服务端并开启浏览器
 
 [前端热更新，后端服务重启，浏览器自动刷新]( http://selvinpro.com/2017/03/20/browser-reload/#more)
 
-> 项目一览
 
-* 电影列表页
-
-![电影列表页](./demo/demo1.png)
-
-* 电影详情编辑
-
-![](./demo/demo2.png)
-
-* 电影详情页
-
-![](./demo/demo3.png)
 

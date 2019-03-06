@@ -1,0 +1,105 @@
+/*
+* @Author: lenovo
+* @Date:   2018-11-29 09:43:18
+* @Last Modified by:   lenovo
+* @Last Modified time: 2018-11-29 09:43:33
+*/
+.login {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f2f2f2;
+    display: relative;
+    /*transition: opacity .3s ease;*/
+}
+
+.title {
+    line-height: 36px;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: "Microsoft YaHei";
+}
+
+.login-container {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+}
+
+.forget {
+    float: right;
+    line-height: 36px;
+    font-size: 1.5rem;
+    color: #029789;
+}
+
+.otherAccountLogin {
+    float: left;
+    line-height: 36px;
+    font-size: 1.5rem;
+    /*color: #029789;*/
+}
+
+.icon-weixin {
+    line-height: 36px;
+    float: left;
+    padding-left: 1rem;
+    font-size: 2.5rem;
+    color: #4daf29;
+}
+
+.register {
+    float: right;
+    line-height: 36px;
+    font-size: 1.5rem;
+    color: #029789;
+}
+
+.el-checkbox {
+    line-height: 36px;
+    float: left;
+}
+
+.el-row {
+    /*margin-bottom: 10px;*/
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.el-button {
+    background-color: #029789;
+    border-color: #029789;
+    width: 100%;
+}
+
+.el-col {
+    border-radius: 4px;
+}
+
+.bg-purple-dark {
+    background: #99a9bf;
+}
+
+.bg-purple {
+    /*background: #d3dce6;*/
+}
+
+.bg-purple-light {
+    /*background: #e5e9f2;*/
+}
+
+.grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+}
+
+.row-bg {
+    padding: 10px 0;
+    /*background-color: #f9fafc;*/
+}
