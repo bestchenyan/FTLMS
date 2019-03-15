@@ -21,6 +21,11 @@
                             <div v-else-if="msg === '/lineManagerUser' "> <LineManageUser></LineManageUser></div>
                             <div v-else-if="msg === '/inspectionUser' "> <InspectionUser></InspectionUser></div>
                             <div v-else-if="msg === '/messageManger' "> <MessageManger></MessageManger></div>
+                            <div v-else-if="msg === '/dataShow' "> <DataShow></DataShow></div>
+                            <div v-else-if="msg === '/figShow' "> <FigShow></FigShow></div>
+                            <div v-else-if="msg === '/dataAnalysis' "> <DataAnaly></DataAnaly></div>
+
+
                             <div v-else> {{msg}}完善中</div>
                         </div>
                     </div>
@@ -37,6 +42,7 @@
     </div>
 </template>
 <script>
+
 import TopNav from './TopNav.vue';
 import LeftNav from './LeftNav.vue';
 import EuiFooter from './Footer.vue';
@@ -48,6 +54,9 @@ import Register from '@/views/register/register.vue';
 import LineManageUser from '@/views/userManage/lineManageUser.vue';
 import InspectionUser from '@/views/userManage/inspectionUser.vue';
 import MessageManger from '@/views/messageManger/messageManger.vue';
+import DataShow from '@/views/datashow/dataShow.vue';
+import FigShow from '@/views/datashow/figShow.vue';
+import DataAnaly from '@/views/datashow/dataAnaly.vue';
 export default {
     data() {
         return {
@@ -57,9 +66,12 @@ export default {
         }
     },
     mounted(){
-        var userMessage = this.$route.params.user;
-        this.username = userMessage.username;
-        this.role = userMessage.role;
+        // var userMessage = this.$route.params.user;
+        this.username = "chenyan";
+        this.role = "0";
+        // var userMessage = this.$route.params.user;
+        // this.username = userMessage.username;
+        // this.role = userMessage.role;
     },
     methods: {
         mychangHandle(msg) { this.msg = msg; }
@@ -75,7 +87,10 @@ export default {
         FaultHistory,
         LineManageUser,
         InspectionUser,
-        MessageManger
+        MessageManger,
+        DataShow,
+        FigShow,
+        DataAnaly
     },
 }
 </script>

@@ -69,6 +69,30 @@ menu.sensor_manage = {
   path: '/messageManger'
   // children: {}
 };
+menu.data_manage = {
+  name: '梦梦模块管理',
+  icon: 'fa fa-file-text-o',
+  children: {}
+};
+let dataManage = menu.data_manage.children;
+dataManage.dataShow = {
+  name: '原始数据展示',
+  icon: 'fa fa-user-circle-o',
+  path: '/dataShow'
+  // children: {}
+};
+dataManage.dataAnaly = {
+  name: '数据预处理',
+  icon: 'fa fa-user-circle-o',
+  path: '/dataAnalysis'
+  // children: {}
+};
+dataManage.figShow = {
+  name: '关联规则',
+  icon: 'fa fa-user-circle-o',
+  path: '/figShow'
+  // children: {}
+};
 // let sensorManage = menu.sensor_manage.children;
 
 

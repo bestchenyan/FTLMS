@@ -13,7 +13,7 @@
             </el-button>
             <div>
                 <el-checkbox v-model="Remenber"> Remenber</el-checkbox>
-              <!--   <a href="javascript:;" style="float: right;color: #3C8DBC;font-size: 14px" @click="register">忘记密码？</a> -->
+                 <a href="javascript:;" style="float: right;color: #3C8DBC;font-size: 14px" @click="register">忘记密码？</a>
             </div>
         </div>
     </div>
