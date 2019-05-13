@@ -5,7 +5,7 @@ const favicon = require('serve-favicon')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const index = require('./server/router/index') // localhost:3000/
-const movie = require('./server/router/movie')
+const fault = require('./server/router/faultRouter')
 const user = require('./server/router/userRouter')
 // 这里连接的是从router /api/movie 引自models/schema/movie 模型
 const db = mongoose.connect(config.mongodb);
@@ -36,7 +36,7 @@ app.use(express.static('dist'))
 
 // 设定路由
 app.use('/', index)
-app.use('/api', movie) // localhost:3000/api/movie/
+app.use('/api', fault) // localhost:3000/api/fault/
 app.use('/api',user) //localhost:3000/api/user/
 
 app.listen(port, () => {

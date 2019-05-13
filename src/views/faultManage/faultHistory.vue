@@ -20,26 +20,24 @@
             <el-table ref="filterTable" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55">
                 </el-table-column>
-                <el-table-column prop="date" label="日期" sortable  column-key="date" :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]" :filter-method="filterHandler">
+                <el-table-column prop="fault_name" label="故障名称">
                 </el-table-column>
-                <el-table-column prop="faultname" label="故障名称">
+                <el-table-column prop="fault_message" label="故障数据">
                 </el-table-column>
-                <el-table-column prop="faultdata" label="故障数据">
+                <el-table-column prop="fault_location" label="故障坐标">
                 </el-table-column>
-                <el-table-column prop="faultlocation" label="故障坐标">
+                <el-table-column prop="start_time" label="起始时间">
                 </el-table-column>
-                <el-table-column prop="starttime" label="起始时间">
+                <el-table-column prop="end_time" label="完成时间">
                 </el-table-column>
-                <el-table-column prop="endtime" label="完成时间">
+                <el-table-column prop="fault_serviceman_id" label="维修人员">
                 </el-table-column>
-                <el-table-column prop="maintainer" label="维修人员">
-                </el-table-column>
-                <el-table-column prop="faultlevel" label="故障等级" width="100" :filters="[{ text: '黄色', value: '黄色' }, { text: '红色', value: '红色' }, { text: '黑色', value: '黑色' }]" :filter-method="filterTag" filter-placement="bottom-end">
+                <el-table-column prop="is_emergent" label="故障等级" width="100" :filters="[{ text: '黄色', value: '黄色' }, { text: '红色', value: '红色' }, { text: '黑色', value: '黑色' }]" :filter-method="filterTag" filter-placement="bottom-end">
                     <template slot-scope="scope">
                         <el-faultlevel :type="scope.row.faultlevel === '家' ? 'primary' : 'success'" disable-transitions>{{scope.row.faultlevel}}</el-faultlevel>
                     </template>
                 </el-table-column>
-                <el-table-column prop="faultstatue" label="故障状态">
+                <el-table-column prop="fault_state" label="故障状态">
                 </el-table-column>
             </el-table>
         </div>
@@ -62,61 +60,22 @@ export default {
                 label: '故障类型'
             }],
             value: '',
-            tableData: [{
-                date: '2018-03-02',
-                faultname: '大风故障',
-                faultdata: '振幅：8m',
-                faultlocation: '(114.202812,30.33874)',
-                starttime: '2018-03-02 09:19:00',
-                endtime: '2018-03-02 19:14:00',
-                maintainer: '李华',
-                faultlevel: '红色',
-                faultstatue: '已维修',
-            }, {
-                date: '2018-05-02',
-                faultname: '线路污闪',
-                faultdata: '湿度：95%',
-                faultlocation: '(114.202994,30.33946)',
-                starttime: '2018-05-02 16:09:00',
-                endtime: '2018-05-02 20:14:00',
-                maintainer: '李磊',
-                faultlevel: '黄色',
-                faultstatue: '已维修',
-            }, {
-                date: '2018-08-12',
-                faultname: '雷击跳闸',
-                faultdata: '电流：80KA',
-                faultlocation: '(114.200542,30.33136)',
-                starttime: '2018-08-12 10:20:00',
-                endtime: '2018-08-12 14:40:00',
-                maintainer: '李华',
-                faultlevel: '黑色',
-                faultstatue: '已维修',
-            }, {
-                date: '2018-10-26',
-                faultname: '外力破坏',
-                faultdata: '断线相电压：0V',
-                faultlocation: '(114.202812,30.33874)',
-                starttime: '2018-10-26 11:33:00',
-                endtime: '2018-10-26 17:27:00',
-                maintainer: '韩梅梅',
-                faultlevel: '黑色',
-                faultstatue: '已维修',
-            }, {
-                date: '2018-12-02',
-                faultname: '线路覆冰',
-                faultdata: '压力：30N',
-                faultlocation: '(114.199111,30.3265)',
-                starttime: '2018-12-02 10:49:00',
-                endtime: '2018-12-03 14:57:00',
-                maintainer: '李明',
-                faultlevel: '黄色',
-                faultstatue: '已维修',
-            }]
+            tableData:'',
         }
     },
-
+    created(){
+        this.getFault()
+    },
     methods: {
+        getFault(){
+            this.$axios.get('/api/fault/getFault',{
+                withCredentials: true
+            }).then(res => {
+                this.tableData = res.data
+            }).catch(err => {
+                throw new Error(err.message)
+            })
+        },
         resetDateFilter() {
             this.$refs.filterTable.clearFilter('date');
         },
