@@ -2,7 +2,7 @@
 
 * 采用`vue-cli` 构建初始项目目录
 * 使用`vue`、`vue-router`、`express`、`webpack`、`gulp`、`Element-ui`构建项目开发环境
-* 前端采用Vue、Element-ui搭建页面以及数据处理，后端采用express完成增删改查的restful API
+* 前端采用Vue、Element-ui搭建页面以及数据处理，后端采用express完成API
 
 > 目录及文件的改动，均含详细备注
 
@@ -26,9 +26,6 @@ npm run server  启动服务端并开启浏览器
 
 这里需要双开两个命令行窗口，一个负责前端的编译，一个负责服务端的任务流
 
-> 环境搭建的详细解决思路
-
-[前端热更新，后端服务重启，浏览器自动刷新]( http://selvinpro.com/2017/03/20/browser-reload/#more)
-
+>
 
 
