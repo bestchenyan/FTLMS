@@ -1,17 +1,16 @@
 <template>
     <div class="login">
         <div class="login-form">
-            <div class="login-header">
-                <img src="../../assets/images/logo.svg" width="100" height="100" alt="">
-                <p>输电线路故障位置监测系统</p>
-            </div>
+
             <el-input placeholder="请输入用户名" suffix-icon="fa fa-user" v-model="username" style="margin-bottom: 18px">
+            </el-input>
+            <el-input placeholder="请输入真实姓名" suffix-icon="fa fa-user" v-model="realname" style="margin-bottom: 18px">
             </el-input>
             <el-input placeholder="请输入密码" suffix-icon="fa fa-keyboard-o" v-model="password" type="password" style="margin-bottom: 18px" @keyup.native.enter="login">
             </el-input>
             <el-input placeholder="请确认密码" suffix-icon="fa fa-keyboard-o" v-model="password" type="password" style="margin-bottom: 18px" @keyup.native.enter="login">
             </el-input>
-            <el-input placeholder="请输入手机号码" suffix-icon="fa fa-keyboard-o" v-model="telephone" type="telephone" style="margin-bottom: 18px" @keyup.native.enter="login">
+            <el-input placeholder="请输入手机号码" suffix-icon="fa fa-keyboard-o" v-model="phone" type="telephone" style="margin-bottom: 18px" @keyup.native.enter="login">
             </el-input>
             <el-input placeholder="请输入邮箱" suffix-icon="fa fa-keyboard-o" v-model="email" type="email" style="margin-bottom: 18px" @keyup.native.enter="login">
             </el-input>
@@ -33,74 +32,63 @@ export default {
     data() {
         return {
             options1: [{
-                value: '选项1',
+                value: '1',
                 label: '线路管理员'
             }, {
-                value: '选项2',
-                label: '选件人员',
-                disabled: true
+                value: '2',
+                label: '巡检人员',
+
             }],
             role: '',
               options2: [{
-                value: '选项1',
-                label: '区域Ⅰ'
+                value: '1',
+                label: '武深高速K1标段'
             }, {
-                value: '选项2',
-                label: '区域Ⅱ',
-                disabled: true
+                value: '2',
+                label: '武深高速K2标段',
             }],
             pollingArea: '',
             username: '',
+            realname:'',
             password: '',
-            telephone:'',
+            phone:'',
             email:'',
+            create_time:'',
+            update_time:'',
             Remenber: true,
             loginLoading: false
         }
     },
     methods: {
+
         sign: function() {
-
-        }
+                    this.signUp().then((data) => {
+                        alert("注册成功");
+                    }).catch(err => {
+                        console.log('出现错误', err.message)
+                    })
+        },
+        signUp: function () {
+            let data = {
+                role:this.role,
+                username: this.username,
+                realname: this.realname,
+                password: this.password,
+                phone:this.phone,
+                email: this.email,
+                polling_area_id:this.pollingArea,
+                create_time: new Date(),
+                update_time:new Date(),
+            }
+            return this.$axios.post('/api/user/signUp', data, {
+                withCredentials: true
+            }).then(response => {
+                return response.data
+            }).catch(err => {
+                throw new Error(err.message)
+            })
+        },
     }
-    // data() {
-    //     let signInForm = {
-    //         username: '',
-    //         pass: ''
-    //     }
-    //     return {
-    //         checked: true,
-    //         signInForm
-    //     }
-    // },
-    // components: {},
-    // computed: {},
-    // created() {
-    //     console.log(111)
-    // },
-    // methods: {
-    //     sign: function() {
-    //         this.signIn().then((data) => {
-    //             this.$router.push({ name: 'manage', params: { user: data } })
-    //         }).catch(err => {
-    //             console.log('出现错误', err.message)
-    //         })
-    //     },
-    //     signIn: function() {
-    //         let data = {
-    //             username: this.signInForm.username,
-    //             password: this.signInForm.pass
-    //         }
-    //         return this.$axios.post('/api/user', data, {
-    //             withCredentials: true
-    //         }).then(response => {
-    //             return response.data
-
-    //         }).catch(err => {
-    //             throw new Error(err.message)
-    //         })
-    //     }
-    // }
 }
 </script>
 <style lang="less" scoped>
@@ -113,6 +101,7 @@ export default {
   width: 100%;
   background-color: #e4e5e6;
   .login-form{
+      top: 23rem;
     width: 375px;
     // height: 400px;
     padding: 30px;

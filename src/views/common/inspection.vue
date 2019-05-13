@@ -3,7 +3,7 @@
         <div class="inspection">
             <div class="title">巡检人员信息</div>
             <div class="table">
-                <el-table :data="tableData" style="width: 100%" height="18rem">
+                <el-table :data="tableData" style="width: 100%" height="10rem">
                     <el-table-column fixed prop="date" label="日期" width="100">
                     </el-table-column>
                     <el-table-column prop="name" label="姓名" width="100">

@@ -4,10 +4,10 @@
             <div class="title">故障传输过程</div>
             <div class="steps">
                 <el-steps :active="4" align-center>
-                    <el-step title="step1" description="叶子节点加入到网络"></el-step>
-                    <el-step title="step2" description="求解多播树时延上限"></el-step>
-                    <el-step title="step3" description="时延上限路径接入多播树"></el-step>
-                    <el-step title="step4" description="连接剩余叶子节点"></el-step>
+                    <el-step title="step1" description=""></el-step>
+                    <el-step title="step2" description=""></el-step>
+                    <el-step title="step3" description=""></el-step>
+                    <el-step title="step4" description=""></el-step>
                 </el-steps>
             </div>
             <div class="status">
@@ -15,8 +15,8 @@
                     <el-tabs :tab-position="tabPosition">
                         <el-tab-pane label="路由表">
                             <div class="multicast">
-                                <el-table :data="tableData" style="width: 100% "height="250" >
-                                    <el-table-column fixed prop="source" label="源节点" width="100">
+                                <el-table :data="tableData" style="width: 100% "height="12rem" >
+                                    <el-table-column  prop="source" label="源节点" width="80">
                                     </el-table-column>
                                     <el-table-column prop="router1" label="路由节点1" width="100">
                                     </el-table-column>
@@ -35,8 +35,8 @@
                                 </el-table>
                             </div>
                         </el-tab-pane>
-                        <el-tab-pane label="接受状态">显示巡检人员接受状态</el-tab-pane>
-                        <el-tab-pane label="响应状态">显示哪个巡检人员响应状态</el-tab-pane>
+                        <!--<el-tab-pane label="接受状态">显示巡检人员接受状态</el-tab-pane>-->
+                        <!--<el-tab-pane label="响应状态">显示哪个巡检人员响应状态</el-tab-pane>-->
                     </el-tabs>
                 </div>
                 <div v-else>
@@ -101,7 +101,7 @@ export default {
 </script>
 <style scoped>
 .steps {
-    height: 8rem;
+    height: 5rem;
 }
 
 
@@ -124,7 +124,7 @@ export default {
 
 .faultTransmission {
     position: relative;
-    height: 30rem;
+    height: 19rem;
     margin: 1rem 1rem 1rem 0;
     padding: 1rem;
     background-color: #fff;

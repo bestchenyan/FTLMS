@@ -8,14 +8,14 @@ const index = require('./server/router/index') // localhost:3000/
 const movie = require('./server/router/movie')
 const user = require('./server/router/userRouter')
 // 这里连接的是从router /api/movie 引自models/schema/movie 模型
-// const db = mongoose.connect(config.mongodb);
-// // 数据库连接
-// db.connection.on("error", function(error) {
-//     console.log("数据库连接失败：" + error);
-// });
-// db.connection.on("open", function() {
-//     console.log("------数据库连接成功！------");
-// });
+const db = mongoose.connect(config.mongodb);
+// 数据库连接
+db.connection.on("error", function(error) {
+    console.log("数据库连接失败：" + error);
+});
+db.connection.on("open", function() {
+    console.log("------数据库连接成功！------");
+});
 // Use native promises
 mongoose.Promise = global.Promise
 

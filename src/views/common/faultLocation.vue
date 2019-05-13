@@ -4,10 +4,10 @@
             <div class="title">故障定位过程</div>
             <div class="steps">
                 <el-steps :active="4" align-center>
-                    <el-step title="step1" description="锚节点间平均跳距"></el-step>
-                    <el-step title="step2" description="未知节点到锚节点间距离"></el-step>
-                    <el-step title="step3" description="求解未知节点坐标"></el-step>
-                    <el-step title="step4" description="未知节点坐标更新"></el-step>
+                    <el-step title="step1" description=""></el-step>
+                    <el-step title="step2" description=""></el-step>
+                    <el-step title="step3" description=""></el-step>
+                    <el-step title="step4" description=""></el-step>
                 </el-steps>
             </div>
             <div class="status">
@@ -55,9 +55,17 @@ export default {
         var point = new BMap.Point(114.202291, 30.33748);
         map.centerAndZoom(point, 18);
         var marker = new BMap.Marker(point); // 创建标注
-        map.addOverlay(marker); // 将标注添加到地图中
-        marker.addEventListener("click", getAttr);
 
+        map.addOverlay(marker); // 将标注添加到地图中
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        marker.addEventListener("click", getAttr);
+        var loadCount = 1;
+        map.addEventListener("tilesloaded",function(){
+            if(loadCount == 1){
+                map.setCenter(point);
+            }
+            loadCount  = loadCount + 1;
+        });
         function getAttr() {
             var p = marker.getPosition(); //获取marker的位置
             alert("marker的位置是" + p.lng + "," + p.lat);
@@ -71,7 +79,7 @@ export default {
 <style scoped>
 .faultLocation {
     position: relative;
-    height: 30rem;
+    height: 17rem;
     margin: 1rem 1rem 1rem 0;
     padding: 1rem;
     background-color: #fff;
@@ -99,7 +107,7 @@ export default {
     font-family: "微软雅黑";
 }
 .steps {
-    height: 8rem;
+    height: 5rem;
 }
 
 .status {
@@ -107,7 +115,7 @@ export default {
 }
 .map{
      width: 30rem;
-    height: 20rem;
+    height: 10rem;
 
 }
 #submaps {

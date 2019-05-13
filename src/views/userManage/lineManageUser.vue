@@ -6,21 +6,19 @@
             <el-button type="primary" icon="el-icon-search" circle></el-button>
         </div>
         <div class="user">
-            <div class="usercontent">
-                <p style="display: inline-block">姓名：陈岩</p>
+            <div class="usercontent" v-for="(item,index) in manage">
+                <p style="display: inline-block">姓名：{{item.realname}}</p>
                 <el-dropdown style="float: right">
                     <span class="el-dropdown-link">
                         <i class="el-icon-setting el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>切换区域
-                        </el-dropdown-item>
                         <el-dropdown-item>
                             <el-popover placement="top" width="160" v-model="visible2">
                                 <p>确定删除吗？</p>
                                 <div style="text-align: right; margin: 0">
                                     <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                                    <el-button type="primary" size="mini" @click="visible2 = false">确定</el-button>
+                                    <el-button type="primary" size="mini" @click="visible2 = false" @click.stop="handleDelete(item)">确定</el-button>
                                 </div>
                                 <el-button slot="reference">删除</el-button>
                             </el-popover>
@@ -28,23 +26,52 @@
                     </el-dropdown-menu>
                 </el-dropdown>
                 <p>角色：线路管理员</p>
-                <p>手机号：13100609890</p>
-                <p>邮箱：chenyanwust@vip.qq.com</p>
+                <p>手机号：{{item.phone}}</p>
+                <p>邮箱：{{item.email}}</p>
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
+    inject:['reload'],
     data() {
         return {
+
             serach: '',
             visible2: false,
-
+            manage:'',
         }
     },
+    created(){
+      this.getManage();
+        console.log(this.manage);
+    },
     methods: {
+        getManage(){
+            this.$axios.get('/api/user/getManage',{
+                withCredentials: true
+            }).then(res => {
+                this.manage = res.data
+                console.log(this.manage)
+            }).catch(err => {
+                throw new Error(err.message)
+            })
 
+        },
+        handleDelete(index) {
+            this.$axios.delete(`/api/user/${index._id}`,{
+                withCredentials: true
+            })
+                .then(res => {
+                    console.dir(res.data)
+                    this.reload()
+                })
+                .catch(err => {
+                    this.$message.error(`${err.message}`, 'ERROR!')
+                    console.log(err)
+                })
+        },
     }
 }
 </script>

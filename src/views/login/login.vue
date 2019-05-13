@@ -31,7 +31,6 @@ export default {
     methods: {
         sign: function() {
             this.signIn().then((data) => {
-                console.log(data)
                 this.$router.push({ name: 'manage', params: { user: data } })
             }).catch(err => {
                 console.log('出现错误', err.message)
@@ -42,7 +41,7 @@ export default {
                 username: this.username,
                 password: this.password
             }
-            return this.$axios.post('/api/user', data, {
+            return this.$axios.post('/api/user/signIn', data, {
                 withCredentials: true
             }).then(response => {
                 return response.data

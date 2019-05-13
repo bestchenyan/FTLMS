@@ -23,11 +23,11 @@
             </el-form-item>
                 <el-form-item label="预计结束时间">
                 <el-col :span="11">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date3" style="width: 100%;"></el-date-picker>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">
-                    <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                    <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date4" style="width: 100%;"></el-time-picker>
                 </el-col>
             </el-form-item>
             <el-form-item label="即时维修">
@@ -66,6 +66,8 @@ export default {
                 region: '',
                 date1: '',
                 date2: '',
+                date3: '',
+                date4: '',
                 delivery: false,
                 type: [],
                 resource: '待检修',
@@ -86,9 +88,13 @@ export default {
     justify-content: center;
     align-items: center;
     position: absolute;
+    top:22rem;
     height: 100%;
     width: 100%;
     background-color: #e4e5e6;
+}
+.el-form-item{
+    margin-bottom: 12px;
 }
 .el-form-item__label{
 	width: 160px;

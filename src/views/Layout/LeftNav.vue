@@ -9,14 +9,14 @@
                             <i :class="menu_v.icon"></i>
                             <span slot="title">{{ menu_v.name }}</span>
                         </template>
-                        <el-menu-item v-if=" role === '0' " v-for="(menuChildren_v,menuChildren_k) in menu_v.children" :key="menuChildren_k" :index="menuChildren_v.path" @click="menuFunction(menuChildren_v.path)">
+                        <el-menu-item v-for="(menuChildren_v,menuChildren_k) in menu_v.children" :key="menuChildren_k" :index="menuChildren_v.path" @click="menuFunction(menuChildren_v.path)">
                             <i class="is-children fa fa-circle-o"></i>
                             <span slot="title">{{ menuChildren_v.name }}</span>
                         </el-menu-item>
-                        <el-menu-item v-else v-for="(menuChildren_v,menuChildren_k) in menu_v.children" :key="menuChildren_k" :index="menuChildren_v.path" @click="menuFunction(menuChildren_v.path)" disabled>
-                            <i class="is-children fa fa-circle-o"></i>
-                            <span slot="title">{{ menuChildren_v.name }}</span>
-                        </el-menu-item>
+                        <!--<el-menu-item v-else v-for="(menuChildren_v,menuChildren_k) in menu_v.children" :key="menuChildren_k" :index="menuChildren_v.path" @click="menuFunction(menuChildren_v.path)" disabled>-->
+                            <!--<i class="is-children fa fa-circle-o"></i>-->
+                            <!--<span slot="title">{{ menuChildren_v.name }}</span>-->
+                        <!--</el-menu-item>-->
                     </el-submenu>
                     <el-menu-item v-else :index="menu_v.path" @click="menuFunction(menu_v.path)">
                         <i :class="menu_v.icon"></i>
@@ -56,7 +56,7 @@ export default {
 <style scoped>
 .title {
     line-height: 5rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #d2d3d4;
     border-bottom: 2px solid #1c1e25;
 }

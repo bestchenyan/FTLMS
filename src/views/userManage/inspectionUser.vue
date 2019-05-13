@@ -6,124 +6,71 @@
             <el-button type="primary" icon="el-icon-search" circle></el-button>
         </div>
         <div class="user">
-            <div class="usercontent">
-                <p style="display: inline-block">姓名：李磊</p>
+            <div class="usercontent" v-for="(item,index) in inspection">
+                <p style="display: inline-block">姓名：{{item.realname}}</p>
                 <el-dropdown style="float: right">
                     <span class="el-dropdown-link">
                         <i class="el-icon-setting el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>切换区域
-                        </el-dropdown-item>
                         <el-dropdown-item>
                             <el-popover placement="top" width="160" v-model="visible2">
                                 <p>确定删除吗？</p>
                                 <div style="text-align: right; margin: 0">
                                     <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                                    <el-button type="primary" size="mini" @click="visible2 = false">确定</el-button>
+                                    <el-button type="primary" size="mini" @click="visible2 = false" @click.stop="handleDelete(item)">确定</el-button>
                                 </div>
-                                <el-button slot="reference">删除</el-button>
+                                <el-button slot="reference"
+                                           >删除</el-button>
                             </el-popover>
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
                 <p>角色：巡检人员</p>
-                <p>手机号：13234527689</p>
-                <p>邮箱：lilei@qq.com</p>
-                <p>巡检区域：武深高速K1标段</p>
-            </div>
-            <div class="usercontent">
-                <p style="display: inline-block">姓名：李明</p>
-                <el-dropdown style="float: right">
-                    <span class="el-dropdown-link">
-                        <i class="el-icon-setting el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>切换区域
-                        </el-dropdown-item>
-                        <el-dropdown-item>
-                            <el-popover placement="top" width="160" v-model="visible2">
-                                <p>确定删除吗？</p>
-                                <div style="text-align: right; margin: 0">
-                                    <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                                    <el-button type="primary" size="mini" @click="visible2 = false">确定</el-button>
-                                </div>
-                                <el-button slot="reference">删除</el-button>
-                            </el-popover>
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-                <p>角色：巡检人员</p>
-                <p>手机号：15684562358</p>
-                <p>邮箱：liming@qq.com</p>
-                <p>巡检区域：武深高速K1标段</p>
-            </div>
-            <div class="usercontent">
-                <p style="display: inline-block">姓名：韩梅梅</p>
-                <el-dropdown style="float: right">
-                    <span class="el-dropdown-link">
-                        <i class="el-icon-setting el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>切换区域
-                        </el-dropdown-item>
-                        <el-dropdown-item>
-                            <el-popover placement="top" width="160" v-model="visible2">
-                                <p>确定删除吗？</p>
-                                <div style="text-align: right; margin: 0">
-                                    <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                                    <el-button type="primary" size="mini" @click="visible2 = false">确定</el-button>
-                                </div>
-                                <el-button slot="reference">删除</el-button>
-                            </el-popover>
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-                <p>角色：巡检人员</p>
-                <p>手机号：18956512537</p>
-                <p>邮箱：hanmeimei@qq.com</p>
-                <p>巡检区域：武深高速K1标段</p>
-            </div>
-            <div class="usercontent">
-                <p style="display: inline-block">姓名：李华</p>
-                <el-dropdown style="float: right">
-                    <span class="el-dropdown-link">
-                        <i class="el-icon-setting el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>切换区域
-                        </el-dropdown-item>
-                        <el-dropdown-item>
-                            <el-popover placement="top" width="160" v-model="visible2">
-                                <p>确定删除吗？</p>
-                                <div style="text-align: right; margin: 0">
-                                    <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                                    <el-button type="primary" size="mini" @click="visible2 = false">确定</el-button>
-                                </div>
-                                <el-button slot="reference">删除</el-button>
-                            </el-popover>
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-                <p>角色：巡检人员</p>
-                <p>手机号：15532548652</p>
-                <p>邮箱：lihua@qq.com</p>
-                <p>巡检区域：武深高速K1标段</p>
+                <p>手机号：{{item.phone}}</p>
+                <p>邮箱：{{item.email}}</p>
+                <p v-if="item.polling_area_id==1">巡检区域：武深高速K1标段</p>
+                <p v-else>巡检区域：武深高速K2标段</p>
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
+    inject:['reload'],
     data() {
         return {
             serach: '',
             visible2: false,
-
+            inspection:'',
         }
     },
+    created(){
+        this.getInspection();
+    },
     methods: {
-
+        getInspection(){
+            this.$axios.get('/api/user/getInspection',{
+                withCredentials: true
+            }).then(res => {
+                this.inspection = res.data
+            }).catch(err => {
+                throw new Error(err.message)
+            })
+        },
+        handleDelete(index) {
+            this.$axios.delete(`/api/user/${index._id}`,{
+                withCredentials: true
+            })
+                .then(res => {
+                    console.dir(res.data)
+                    this.reload()
+                })
+                .catch(err => {
+                    this.$message.error(`${err.message}`, 'ERROR!')
+                    console.log(err)
+                })
+        },
     }
 }
 </script>

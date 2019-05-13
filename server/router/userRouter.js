@@ -8,9 +8,16 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/schema/userModel')
 // 查询所有用户
-
-router.post('/user', (req, res) => {
-
+let detectInfo = function (req) {
+    return User.find({username: req.body.username}).then(data => {
+        if (data.length === 0) {
+            return (req.body)
+        } else {
+            throw new Error('username existed')
+        }
+    })
+}
+router.post('/user/signIn', (req, res) => {
     User.find({ username: req.body.username, password: req.body.password })
         .then(data => {
             if (data.length == 0) {
@@ -28,5 +35,50 @@ router.post('/user', (req, res) => {
                 message: err.message
             })
         })
+})
+router.post('/user/signUp', (req, res) => {
+    detectInfo(req).then(response => {
+        const user = new User(response)
+        user.save(()=>{
+            res.jsonp({
+                data: user
+            })
+        }, err => {
+            res.status(400).send({
+                error: error
+            })
+        })
+    }, error => {
+        res.status(400).send({
+            error: error.message
+        })
+    })
+})
+router.get('/user/getManage',(req,res) =>{
+    User.find({ role: '1', })
+        .then(data => {
+            res.jsonp(data)
+        })
+        .catch(err =>{
+            res.jsonp(err)
+        })
+
+})
+router.get('/user/getInspection',(req,res) =>{
+    User.find({ role: '2', })
+        .then(data => {
+            res.jsonp(data)
+        })
+        .catch(err =>{
+            res.jsonp(err)
+        })
+
+})
+router.delete('/user/:id', (req, res) => {
+    User.findOneAndRemove({
+        _id: req.params.id
+    })
+        .then(data => res.send(`${data.username}删除成功`))
+        .catch(err => res.json(err))
 })
 module.exports = router

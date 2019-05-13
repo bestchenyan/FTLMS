@@ -13,9 +13,9 @@
                 <div class="transmission">
                     <FaultTransmission></FaultTransmission>
                 </div>
-                <div class="inspection">
-                    <Inspection></Inspection>
-                </div>
+                <!--<div class="inspection">-->
+                    <!--<Inspection></Inspection>-->
+                <!--</div>-->
             </el-col>
         </el-row>
     </div>
@@ -68,7 +68,7 @@ export default {
         }
         var pointA = new BMap.Point(114.202525, 30.34000);
         var pointB = new BMap.Point(114.199999, 30.32210);
-        console.log('输电线的距离是：' + (map.getDistance(pointA, pointB)).toFixed(2) + ' 米。'); //获取两点距离,保留小数点后两位
+        // console.log('输电线的距离是：' + (map.getDistance(pointA, pointB)).toFixed(2) + ' 米。'); //获取两点距离,保留小数点后两位
         /**
          * 线上布点
          */
@@ -76,7 +76,6 @@ export default {
         var ss = (startLatitude - endLatitude) * 100000;
         var sigDis = Math.round(parseInt(ss) / sig); //每隔sigDis放一个点
         var para = randomNumber.newRandomNumbersWithNoRepeat(0, 499, 100);
-        console.log(para);
 
         function line(y, s) {
             var x;
@@ -99,13 +98,14 @@ export default {
         }
         // 编写自定义函数,创建标注
         function addMarker(point, title) {
-            if (para.includes(title)) {
-                var myIcon = new BMap.Icon("/static/images/anchor.png", new BMap.Size(16, 16));
-            } else {
-                var myIcon = new BMap.Icon("/static/images/unknownNode.png", new BMap.Size(16, 16));
-            }
+            // if (para.includes(title)) {
+            //     var myIcon = new BMap.Icon("/static/images/anchor.png", new BMap.Size(16, 16));
+            // } else {
+            //     var myIcon = new BMap.Icon("/static/images/unknownNode.png", new BMap.Size(16, 16));
+            // }
             // var pointCollection = new BMap.PointCollection(points, options);
             //  map.addOverlay(pointCollection);  // 添加Overlay
+            var myIcon = new BMap.Icon("/static/images/anchor.png", new BMap.Size(16, 16));
             var marker = new BMap.Marker(point, { icon: myIcon });
             map.addOverlay(marker);
             marker.setTitle(title);
@@ -150,7 +150,11 @@ export default {
                 var point = new BMap.Point(X[s][k], Y[s][k]);
                 if (k < 10) { k = '0' + k };
                 var title = "" + s + k;
-                addMarker(point, title);
+                if (para.includes(title)) {
+                    addMarker(point, title);
+                    // var myIcon = new BMap.Icon("/static/images/anchor.png", new BMap.Size(16, 16));
+                }
+                // addMarker(point, title);
             }
         }
         for (var i = 0; i < 4; i++) {
@@ -158,6 +162,7 @@ export default {
             var point = new BMap.Point(XInspection[i], YInspection[i]);
             addMarker1(point, title);
         }
+        console.log(point)
 
     },
     methods: {
@@ -167,7 +172,7 @@ export default {
 </script>
 <style scoped>
 .mapContent {
-    height: 66rem;
+    height: 40rem;
     margin: 1rem;
     padding: 1rem;
     background-color: #fff;
@@ -204,7 +209,12 @@ export default {
     font-family: "微软雅黑";
 }
 
-
+.BMap_cpyCtrl {
+    display:none;
+}
+.anchorBL{
+    display:none;
+}
 
 /*.faultLocation {
     position: relative;

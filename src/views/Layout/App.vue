@@ -24,8 +24,6 @@
                             <div v-else-if="msg === '/dataShow' "> <DataShow></DataShow></div>
                             <div v-else-if="msg === '/figShow' "> <FigShow></FigShow></div>
                             <div v-else-if="msg === '/dataAnalysis' "> <DataAnaly></DataAnaly></div>
-
-
                             <div v-else> {{msg}}完善中</div>
                         </div>
                     </div>
@@ -66,12 +64,9 @@ export default {
         }
     },
     mounted(){
-        // var userMessage = this.$route.params.user;
-        this.username = "chenyan";
-        this.role = "0";
-        // var userMessage = this.$route.params.user;
-        // this.username = userMessage.username;
-        // this.role = userMessage.role;
+        var userMessage = this.$route.params.user;
+        this.username = userMessage.username;
+        this.role = userMessage.role;
     },
     methods: {
         mychangHandle(msg) { this.msg = msg; }
@@ -103,7 +98,7 @@ export default {
     background-color: #ffffff;
 }
 .leftNav{
-    height: 75rem;
+    height: 48rem;
     background-color: #20222a;
 /*    position: relative;
     left:0;
@@ -112,7 +107,7 @@ export default {
 .centerNav {
     position: relative;
     width: 100%;
-    height: 70rem;
+    /*height: 70rem;*/
 }
 
 .bottomNav {
@@ -139,7 +134,7 @@ export default {
 
 .centerNav .grid-content {
     /*border-radius: 4px;*/
-    min-height: 70rem;
+    /*min-height: 70rem;*/
 }
 
 .bottomNav .grid-content {
