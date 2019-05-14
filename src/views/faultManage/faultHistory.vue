@@ -33,16 +33,16 @@
                 <el-table-column prop="fault_serviceman_id" label="维修人员">
                 </el-table-column>
                 <el-table-column prop="is_emergent" label="故障等级" width="100" :filters="[{ text: '黄色', value: '黄色' }, { text: '红色', value: '红色' }, { text: '黑色', value: '黑色' }]" :filter-method="filterTag" filter-placement="bottom-end">
-                    <template slot-scope="scope">
-                        <el-faultlevel :type="scope.row.faultlevel === '家' ? 'primary' : 'success'" disable-transitions>{{scope.row.faultlevel}}</el-faultlevel>
-                    </template>
+                    <!--<template slot-scope="scope">-->
+                        <!--<el-faultlevel :type="scope.row.faultlevel === '家' ? 'primary' : 'success'" disable-transitions>{{scope.row.faultlevel}}</el-faultlevel>-->
+                    <!--</template>-->
                 </el-table-column>
                 <el-table-column prop="fault_state" label="故障状态">
                 </el-table-column>
             </el-table>
         </div>
         <div class="bottom">
-            <el-pagination background layout="prev, pager, next" :total="100">
+            <el-pagination background layout="prev, pager, next" :total="totalFaults">
             </el-pagination>
         </div>
     </div>
@@ -61,6 +61,7 @@ export default {
             }],
             value: '',
             tableData:'',
+            totalFaults:'',
         }
     },
     created(){
@@ -71,7 +72,9 @@ export default {
             this.$axios.get('/api/fault/getFault',{
                 withCredentials: true
             }).then(res => {
-                this.tableData = res.data
+                console.log(res.data.data)
+                this.totalFaults = res.data.data.length
+                this.tableData = res.data.data
             }).catch(err => {
                 throw new Error(err.message)
             })

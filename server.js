@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const index = require('./server/router/index') // localhost:3000/
 const fault = require('./server/router/faultRouter')
 const user = require('./server/router/userRouter')
+const zigbee = require('./server/router/zigbeeRouter')
 // 这里连接的是从router /api/movie 引自models/schema/movie 模型
 const db = mongoose.connect(config.mongodb);
 // 数据库连接
@@ -38,6 +39,7 @@ app.use(express.static('dist'))
 app.use('/', index)
 app.use('/api', fault) // localhost:3000/api/fault/
 app.use('/api',user) //localhost:3000/api/user/
+app.use('/api',zigbee) //localhost:3000/api/zigbee/
 
 app.listen(port, () => {
     console.log(`${pkg.name} listening on port ${port}`)

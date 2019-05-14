@@ -12,8 +12,7 @@
 // 第三级：单个集合         单个表
 // collection               // table
 
-// 第四级：数据
-// { "_id" : ObjectId("58d0c3f6b87b6f1bccc055dc"),"title" : "肖申克的救赎"}
+
 
 
 
