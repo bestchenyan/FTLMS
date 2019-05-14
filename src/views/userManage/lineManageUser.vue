@@ -21,6 +21,7 @@
                                     <el-button type="primary" size="mini" @click="visible2 = false" @click.stop="handleDelete(item)">确定</el-button>
                                 </div>
                                 <el-button slot="reference">删除</el-button>
+                                <el-button slot="reference">xi</el-button>
                             </el-popover>
                         </el-dropdown-item>
                     </el-dropdown-menu>

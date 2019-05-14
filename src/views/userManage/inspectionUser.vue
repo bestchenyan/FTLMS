@@ -53,6 +53,7 @@ export default {
             this.$axios.get('/api/user/getInspection',{
                 withCredentials: true
             }).then(res => {
+                console.log(res.data)
                 this.inspection = res.data
             }).catch(err => {
                 throw new Error(err.message)

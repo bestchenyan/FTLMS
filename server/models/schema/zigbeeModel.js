@@ -1,13 +1,13 @@
 
 const mongoose = require('mongoose')
 const zigbeeSchema = mongoose.Schema({
-    device_type:String,
+
     device_location: String,
-    fault_name:String,
+    device_type:String,
     last_data: String,
     last_time:String,
     device_status:String,
     fault_event:String,
 })
 
-const ZigbeeDevice = module.exports = mongoose.model('ZigbeeDevice', zigbeeSchema)
+const Zigbee = module.exports = mongoose.model('Zigbee', zigbeeSchema)

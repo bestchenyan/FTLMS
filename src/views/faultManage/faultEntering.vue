@@ -1,95 +1,112 @@
 <template>
-    <div class="entering">
-        <el-form ref="form" :model="form" label-width="100px">
-            <el-form-item label="故障名称">
-                <el-input v-model="form.fault_name"></el-input>
-            </el-form-item>
-            <el-form-item label="维修人员">
-                <el-select v-model="form.fault_serviceman_id" placeholder="请选择维修人员">
-                    <el-option label="李磊" value="lilei"></el-option>
-                    <el-option label="李明" value="liming"></el-option>
-                    <el-option label="韩梅梅" value="hanmeimei"></el-option>
-                    <el-option label="李华" value="lihua"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="故障发生时间">
+    <div>
+        <div class="lineManageUser">
+            <div class="user" v-if="tableData.length != 0">
+                <div class="usercontent" v-for="(item,index) in tableData">
+                    <p style="display: inline-block" v-if="item.device_type == 1">设备类型：未知节点</p>
+                    <p style="display: inline-block" v-else>设备类型：锚节点</p>
+                    <el-dropdown style="float: right">
+                    <span class="el-dropdown-link">
+                        <i class="el-icon-setting el-icon--right"></i>
+                    </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>
+                                <el-popover placement="top" width="160" v-model="visible2">
+                                    <p>确定删除吗？</p>
+                                    <div style="text-align: right; margin: 0">
+                                        <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
+                                        <el-button type="primary" size="mini" @click="visible2 = false"
+                                                   @click.stop="handleDelete(item)">确定
+                                        </el-button>
+                                    </div>
+                                    <el-button slot="reference" @click.stop="open(item)">故障信息录入</el-button>
+                                </el-popover>
+                            </el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                    <p>故障坐标：{{item.device_location}}</p>
+                    <p>故障数据：{{item.last_data}}</p>
+                </div>
+            </div>
+            <div v-else><p class="usercontent">线路运行稳定，暂无故障信息！</p></div>
+        </div>
+        <el-dialog
+                :visible.sync="centerDialogVisible"
+                :fullscreen=true
+                center>
+            <FaultEnter :id="id" :device_location="device_location" :last_data="last_data"></FaultEnter>
+        </el-dialog>
 
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.start_time" style="width: 100%;"></el-date-picker>
-
-            </el-form-item>
-                <el-form-item label="预计结束时间">
-
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.end_time" style="width: 100%;"></el-date-picker>
-
-            </el-form-item>
-            <el-form-item label="故障等级">
-                <el-radio-group v-model="form.is_emergent">
-                    <el-radio label="黄色" name="type"></el-radio>
-                    <el-radio label="红色" name="type"></el-radio>
-                    <el-radio label="黑色" name="type"></el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item label="故障状态">
-                <el-radio-group v-model="form.fault_state">
-                    <el-radio label="待检修"></el-radio>
-                    <el-radio label="维修中"></el-radio>
-                    <el-radio label="已检修"></el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
-            </el-form-item>
-        </el-form>
     </div>
 </template>
 <script>
-export default {
-    data() {
-        return {
-            form: {
-                zigbee_dev_id:'1',
-                fault_location:'111,222',
-                fault_name: '',
-                fault_message: "压力：30N",
-                fault_serviceman_id: '',
-                fault_area_id:'1',
-                start_time: '',
-                end_time: '',
-                is_emergent: '',
-                fault_state: '',
-                create_time: new Date(),
-                update_time:new Date(),
+    import FaultEnter from '@/views/common/faultEnter.vue'
+    export default {
+        data() {
+            return {
+                id:'',
+                device_location:'',
+                last_data:'',
+                visible2: false,
+                centerDialogVisible: false,
+                tableData: '',
+            }
+        },
+        components: {
+            FaultEnter,
+        },
+        created() {
+            this.getZigbee();
+        },
+        methods: {
+            getZigbee() {
+                this.$axios.get('/api/zigbee/getZigbee', {
+                    withCredentials: true
+                }).then(res => {
+                    console.log(res.data)
+                    this.tableData = res.data
+                }).catch(err => {
+                    throw new Error(err.message)
+                })
+            },
+
+            open(index) {
+                this.centerDialogVisible = true
+                this.id=index._id
+                this.device_location=index.device_location
+                this.last_data = index.last_data
+
             }
         }
-    },
-    methods: {
-        onSubmit: function () {
-            let data = this.form
-            return this.$axios.post('/api/fault/setFault', data, {
-                withCredentials: true
-            }).then(response => {
-                return response.data
-            }).catch(err => {
-                throw new Error(err.message)
-            })
-        },
     }
-}
 </script>
 <style>
-.entering {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top:22rem;
-    height: 100%;
-    width: 100%;
-    background-color: #e4e5e6;
-}
+    .lineManageUser {
+        height: 100%;
+        margin: 1rem;
+        padding: 1rem;
+        background-color: white;
+    }
 
-.el-form-item__label{
-	width: 160px;
-}
+
+
+    .usercontent {
+        width: 25rem;
+        line-height: 2rem;
+        text-align: left;
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-family: "微软雅黑";
+        border-radius: 2px;
+        border: 1px solid #333;
+        margin: 1rem;
+        padding: 1rem;
+        -webkit-box-shadow: 3px 3px #409EFF;
+        -moz-box-shadow: 3px 3px #409EFF;
+        box-shadow: 3px 3px #409EFF;
+    }
+
+    .el-form-item__label {
+        width: 160px;
+    }
 </style>
